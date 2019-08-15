@@ -3,7 +3,7 @@ var btnProximo = document.querySelector('#btn-proximo');
 var btnVerificar = document.querySelector('#btn-verificar');
 var btn = document.querySelector('#btn');
 var date = document.querySelector('#date');
-var numQuiz = -1, totalResultado = 0, idade;
+var numQuiz = 0, totalResultado = 0, idade = 2100;
 
 var quiz = [
     {
@@ -78,14 +78,13 @@ function criaAlternativa(indiceArr, e) {
 };
 
 btnProximo.onclick = function () {
-    if (numQuiz < 0) {
+    if (idade == 2100) {
         var data = date.value;
         var ano = [];
         for (var i = 0; i < 4; i++) {
             ano[i] = data[i];
         }
         idade = ano.join('');
-        numQuiz = 0;
     }
     if (idade <= 2009 && numQuiz >= 0) {
         if (numQuiz < quiz.length) {
