@@ -1,11 +1,11 @@
-var areaQuiz = document.querySelector('#area-quiz');
-var btnProximo = document.querySelector('#btn-proximo');
-var btnVerificar = document.querySelector('#btn-verificar');
-var btn = document.querySelector('#btn');
-var date = document.querySelector('#date');
-var numQuiz = 0, totalResultado = 0, idade = 2100;
+const areaQuiz = document.querySelector('#area-quiz');
+const btnProximo = document.querySelector('#btn-proximo');
+const btnVerificar = document.querySelector('#btn-verificar');
+const btn = document.querySelector('#btn');
+const date = document.querySelector('#date');
+let numQuiz = 0, totalResultado = 0, idade = 2100;
 
-var quiz = [
+let quiz = [
     {
         pergunta: 'Qual é o ano da promulgação da Constituição Federal do Brasil?',
         a: '1987',
@@ -33,60 +33,56 @@ var quiz = [
 ];
 
 function criaTituloPergunta(indiceArr) {
-    var tituloPergunta = document.createElement('h2');
-    var textoPergunta = document.createTextNode(quiz[indiceArr].pergunta);
-    tituloPergunta.appendChild(textoPergunta);
+    let tituloPergunta = document.createElement('h2');
+    tituloPergunta.appendChild(document.createTextNode(quiz[indiceArr].pergunta));
     areaQuiz.appendChild(tituloPergunta);
 };
 
 function criaResultado() {
-    var textoResultado = document.createElement('h2');
-    var texto = document.createTextNode('Parabéns, você acertou ' + totalResultado + ' respostas das perguntas!!!');
-    textoResultado.appendChild(texto);
+    let textoResultado = document.createElement('h2');
+    textoResultado.appendChild(document.createTextNode(`Parabéns, você acertou ${totalResultado} respostas!!!`));
     areaQuiz.appendChild(textoResultado);
 };
 
 function criaAlternativa(indiceArr, e) {
-    var label = document.createElement('label');
-
-    var inputQuiz = document.createElement('input');
+    let label = document.createElement('label');
+    let inputQuiz = document.createElement('input');
     inputQuiz.setAttribute('type', 'radio');
     inputQuiz.setAttribute('name', 'quiz');
-
+    label.appendChild(inputQuiz);
     switch (e) {
         case 'a':
             inputQuiz.setAttribute('value', quiz[indiceArr].a);
-            var texto = document.createTextNode(quiz[indiceArr].a);
+            label.appendChild(document.createTextNode(quiz[indiceArr].a));
             break;
         case 'b':
             inputQuiz.setAttribute('value', quiz[indiceArr].b);
-            var texto = document.createTextNode(quiz[indiceArr].b);
+            label.appendChild(document.createTextNode(quiz[indiceArr].b));
             break;
         case 'c':
             inputQuiz.setAttribute('value', quiz[indiceArr].c);
-            var texto = document.createTextNode(quiz[indiceArr].c);
+            label.appendChild(document.createTextNode(quiz[indiceArr].c));
             break;
         case 'd':
             inputQuiz.setAttribute('value', quiz[indiceArr].d);
-            var texto = document.createTextNode(quiz[indiceArr].d);
+            label.appendChild(document.createTextNode(quiz[indiceArr].d));
             break;
     }
-
-    label.appendChild(inputQuiz);
-    label.appendChild(texto);
     areaQuiz.appendChild(label);
 };
 
 btnProximo.onclick = function () {
     if (idade == 2100) {
-        var data = date.value;
-        var ano = [];
-        for (var i = 0; i < 4; i++) {
+        let data = date.value;
+        let ano = [];
+        for (let i = 0; i < 4; i++) {
             ano[i] = data[i];
         }
         idade = ano.join('');
     }
     if (idade <= 2009 && numQuiz >= 0) {
+        if(idade == '')
+            return;
         if (numQuiz < quiz.length) {
             areaQuiz.innerHTML = '';
             criaTituloPergunta(numQuiz);
@@ -107,7 +103,7 @@ btnProximo.onclick = function () {
 };
 
 btnVerificar.onclick = function () {
-    var quizAtual = numQuiz - 1;
+    let quizAtual = numQuiz - 1;
     if (verificaAlternativa() === quiz[quizAtual].resposta) {
         if (quizAtual === totalResultado)
             totalResultado++;
@@ -115,9 +111,9 @@ btnVerificar.onclick = function () {
 };
 
 function verificaAlternativa() {
-    var quizAtual = numQuiz - 1;
-    var radio = document.getElementsByName('quiz');
-    for (var i = 0; i < radio.length; i++) {
+    let quizAtual = numQuiz - 1;
+    let radio = document.getElementsByName('quiz');
+    for (let i = 0; i < radio.length; i++) {
         if (radio[i].checked) {
             return radio[i].value;
         }
